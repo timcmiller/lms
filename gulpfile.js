@@ -80,7 +80,7 @@ gulp.task('mocha:test', function() {
     .pipe(mocha({
       read: false,
       reporter: 'nyan'
-    }))
+    }));
 });
 
 gulp.task('webpack:test', function() {
@@ -106,6 +106,6 @@ gulp.task('webpack:test', function() {
 });
 
 gulp.task('css:dev', ['sass:dev', 'images:dev', 'fonts:dev']);
-gulp.task('default', ['build:dev', 'jscs', 'lint']);
+gulp.task('default', ['build', 'jscs', 'lint']);
 gulp.task('test', ['webpack:test']);
 gulp.task('build', ['static:dev', 'webpack:dev', 'css:dev']);
