@@ -23,9 +23,14 @@ gulp.task('sass:dev', function() {
   .pipe(gulp.dest('build/css'));
 });
 
-gulp.task('css:dev', function() {
+gulp.task('fonts:dev', function() {
   return gulp.src('./app/sass/icons/fonts/**')
   .pipe(gulp.dest('build/css/fonts'));
+});
+
+gulp.task('images:dev', function() {
+  return gulp.src('./app/sass/images/**')
+  .pipe(gulp.dest('build/css/images'));
 });
 
 gulp.task('sass:watch', function () {
@@ -66,5 +71,7 @@ gulp.task('webpack:dev', function() {
   .pipe(gulp.dest('build/'));
 });
 
-gulp.task('build', ['static:dev', 'sass:dev', 'webpack:dev', 'css:dev']);
+gulp.task('css:dev', ['images:dev', 'fonts:dev', 'sass:dev']);
 gulp.task('default', ['build:dev', 'jscs', 'lint']);
+gulp.task('build', ['static:dev', 'webpack:dev', 'css:dev']);
+
