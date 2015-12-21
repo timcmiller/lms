@@ -26,5 +26,23 @@ var server = app.listen(process.env.PORT || 3000, function() {
   console.log('Server Up');
 });
 
-module.exports = server;
+// var parser = require('cadet-parser');
+// var fs = require('fs');
+// var Assignment = require(__dirname + '/models/assignment.js');
 
+// var now = new Date();
+// var nextweek = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000);
+
+// file = fs.readFileSync('./tempDoc.md', 'utf-8');
+
+// parser(file, nextweek, function(course) {
+//   for(var i = 0; i < course.weeks[0].days.length; i++) {
+//     debugger;
+//     var newAssignment = new Assignment(course.weeks[0].days[i].assignments[0]);
+//     newAssignment.save(function(err, data) {
+//       console.log(data);
+//     });
+//   }
+// });
+
+module.exports = server;

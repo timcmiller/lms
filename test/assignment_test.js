@@ -27,7 +27,8 @@ describe('the assignment routes', function() {
   });
 
   it('should be able to create an assignment', function(done) {
-    var testAssignment = {type: 'test', description: 'testing', courseID: 'thisIsAnId'};
+    var date = new Date();
+    var testAssignment = {type: 'test', description: 'testing', dueDate: date, courseID: 'thisIsAnId'};
     chai.request('localhost:3000')
       .post('/api/assignments')
       .send(testAssignment)
@@ -38,6 +39,7 @@ describe('the assignment routes', function() {
         expect(res.text.type).to.eql('test');
         expect(res.text.description).to.eql('testing');
         expect(res.text.courseID).to.eql('thisIsAnId');
+        expect(new Date(res.text.dueDate)).to.eql(date);
         done();
     });
   });

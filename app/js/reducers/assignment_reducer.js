@@ -4,36 +4,36 @@ var lodash = require('lodash');
 
 var initialState = [
   {
-    data: [{_id: 0, type: '', description: 'Some assignment from the store', courseID: ''}],
+    data: [{_id: 2, type: '', description: '', courseID: ''}],
     expand: true,
     header: 'Due Right Now',
-    context: 'current'
+    context: 'upcoming'
   },
   {
-    data: [],
+    data: [{_id: 2, type: '', description: '', courseID: ''}],
     expand: false,
     header: 'Due Later',
-    context: 'upcoming'
+    context: 'current'
   },
   {
     data: [{_id: 2, type: '', description: '', courseID: ''}],
     expand: false,
     header: 'Past Due',
     context: 'late'
-  }
+  },
+  {
+    data: [{_id: 2, type: '', description: '', courseID: ''}],
+    expand: false,
+    header: 'Turned In',
+    context: 'turnedIn'
+  },
+
 ];
 
 module.exports = function assignments(state, action) {
   var previousState = (state ? state : initialState);
 
   switch(action.type) {
-    case types.ADD_ASSIGNMENT:
-      return [{
-        id: '',
-        type: '',
-        description: '',
-        courseID: ''
-      }].concat(previousState);
 
     case types.HANDLE_EXPAND_CLICK:
       return state.map(function(assignment) {
@@ -50,16 +50,61 @@ module.exports = function assignments(state, action) {
     case types.RECEIVE_ASSIGNMENTS:
       return state.map(function(assignment) {
 
-        if(assignment.context !== 'upcoming') {
-          return assignment;
+        if(assignment.context === action.upcoming) {
+          return assign(
+            {},
+            assignment,
+            {data: action.upcoming}
+          );
         }
 
-        return assign(
-          {},
-          assignment,
-          {data: action.newAssignments}
-        );
+        if(assignment.context === action.current) {
+          return assign(
+            {},
+            assignment,
+            {data: action.current}
+          );
+        }
+
+        if(assignment.context === action.late) {
+          return assign(
+            {},
+            assignment,
+            {data: action.late}
+          );
+        }
+
+        if(assignment.context === action.turnedIn) {
+          return assign(
+            {},
+            assignment,
+            {data: action.turnedIn}
+          );
+        }
       });
+
+    case types.UPDATE_ASSIGNMENTS:
+      return state.map(function(assignment) {
+        if(assignment.context !== action.context && assignment.context !== 'turnedIn') {
+          return assignemnt;
+        }
+
+        if(assignment.context === 'turnedIn') {
+          return assign(
+            {},
+            assignment,
+            {data: assignment.data.push(aciton.completedAssignment)}
+          );
+        }
+
+        for (var i = 0; i < assignment.data.length; i++) {
+          if(assignment[i].data._id === action._id) {
+            action.completedAssignment = assignment.data.splice(i, 1);
+          }
+        }
+        return assignment;
+      });
+
 
     default:
       return previousState;
